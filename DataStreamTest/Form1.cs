@@ -39,6 +39,7 @@ namespace DataStreamTest
 
             timer.Tick += new EventHandler(ticks);
             add_trade.Tick += new EventHandler(add_trade_event);
+            comboBox_pair.SelectedIndex = 0;
 
         }
         int id = 100100100;
@@ -131,7 +132,7 @@ namespace DataStreamTest
                 }
             }
 
-            button1.Invoke((MethodInvoker)(() => button1.Text = ask.ToString()));
+            buy_button.Invoke((MethodInvoker)(() => buy_button.Text = ask.ToString()));
             textBox1.Text = text;
         }
 
