@@ -47,21 +47,20 @@
             this.comboBox_pair = new System.Windows.Forms.ComboBox();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.sell_button = new System.Windows.Forms.Button();
             this.tabPage2 = new System.Windows.Forms.TabPage();
             this.tabPage3 = new System.Windows.Forms.TabPage();
             this.tabPage4 = new System.Windows.Forms.TabPage();
             this.tabPage5 = new System.Windows.Forms.TabPage();
             this.tabPage6 = new System.Windows.Forms.TabPage();
-            this.textBox1 = new System.Windows.Forms.TextBox();
-            this.sell_button = new System.Windows.Forms.Button();
             this.close_all_button = new System.Windows.Forms.Button();
+            this.textBox1 = new System.Windows.Forms.TextBox();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown3)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
-            this.tabPage6.SuspendLayout();
             this.SuspendLayout();
             // 
             // buy_button
@@ -70,19 +69,19 @@
             this.buy_button.Name = "buy_button";
             this.buy_button.Size = new System.Drawing.Size(194, 35);
             this.buy_button.TabIndex = 1;
-            this.buy_button.Text = "button1";
+            this.buy_button.Text = "Buy";
             this.buy_button.UseVisualStyleBackColor = true;
-            this.buy_button.Click += new System.EventHandler(this.button1_Click);
+            this.buy_button.Click += new System.EventHandler(this.buy_button_Click);
             // 
             // close_selected_button
             // 
-            this.close_selected_button.Location = new System.Drawing.Point(44, 505);
+            this.close_selected_button.Location = new System.Drawing.Point(31, 456);
             this.close_selected_button.Name = "close_selected_button";
             this.close_selected_button.Size = new System.Drawing.Size(194, 35);
             this.close_selected_button.TabIndex = 2;
-            this.close_selected_button.Text = "button2";
+            this.close_selected_button.Text = "Close Selected";
             this.close_selected_button.UseVisualStyleBackColor = true;
-            this.close_selected_button.Click += new System.EventHandler(this.button2_Click);
+            this.close_selected_button.Click += new System.EventHandler(this.close_selected_button_Click);
             // 
             // numericUpDown1
             // 
@@ -106,7 +105,6 @@
             0,
             0,
             -2147483648});
-            this.numericUpDown1.ValueChanged += new System.EventHandler(this.numericUpDown1_ValueChanged);
             // 
             // numericUpDown2
             // 
@@ -204,8 +202,8 @@
             this.dataGridView1.RowHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.None;
             this.dataGridView1.RowHeadersVisible = false;
             this.dataGridView1.RowTemplate.Height = 24;
-            this.dataGridView1.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.CellSelect;
-            this.dataGridView1.Size = new System.Drawing.Size(471, 262);
+            this.dataGridView1.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.dataGridView1.Size = new System.Drawing.Size(471, 229);
             this.dataGridView1.TabIndex = 10;
             this.dataGridView1.VirtualMode = true;
             this.dataGridView1.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellContentClick);
@@ -327,12 +325,21 @@
             this.tabPage1.Text = "tabPage1";
             this.tabPage1.UseVisualStyleBackColor = true;
             // 
+            // sell_button
+            // 
+            this.sell_button.Location = new System.Drawing.Point(27, 121);
+            this.sell_button.Name = "sell_button";
+            this.sell_button.Size = new System.Drawing.Size(194, 35);
+            this.sell_button.TabIndex = 14;
+            this.sell_button.Text = "Sell";
+            this.sell_button.UseVisualStyleBackColor = true;
+            // 
             // tabPage2
             // 
             this.tabPage2.Location = new System.Drawing.Point(4, 25);
             this.tabPage2.Name = "tabPage2";
             this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(559, 319);
+            this.tabPage2.Size = new System.Drawing.Size(462, 190);
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "tabPage2";
             this.tabPage2.UseVisualStyleBackColor = true;
@@ -342,7 +349,7 @@
             this.tabPage3.Location = new System.Drawing.Point(4, 25);
             this.tabPage3.Name = "tabPage3";
             this.tabPage3.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage3.Size = new System.Drawing.Size(559, 319);
+            this.tabPage3.Size = new System.Drawing.Size(462, 190);
             this.tabPage3.TabIndex = 2;
             this.tabPage3.Text = "tabPage3";
             this.tabPage3.UseVisualStyleBackColor = true;
@@ -352,7 +359,7 @@
             this.tabPage4.Location = new System.Drawing.Point(4, 25);
             this.tabPage4.Name = "tabPage4";
             this.tabPage4.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage4.Size = new System.Drawing.Size(559, 319);
+            this.tabPage4.Size = new System.Drawing.Size(462, 190);
             this.tabPage4.TabIndex = 3;
             this.tabPage4.Text = "tabPage4";
             this.tabPage4.UseVisualStyleBackColor = true;
@@ -362,54 +369,45 @@
             this.tabPage5.Location = new System.Drawing.Point(4, 25);
             this.tabPage5.Name = "tabPage5";
             this.tabPage5.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage5.Size = new System.Drawing.Size(559, 319);
+            this.tabPage5.Size = new System.Drawing.Size(462, 190);
             this.tabPage5.TabIndex = 4;
             this.tabPage5.Text = "tabPage5";
             this.tabPage5.UseVisualStyleBackColor = true;
             // 
             // tabPage6
             // 
-            this.tabPage6.Controls.Add(this.textBox1);
             this.tabPage6.Location = new System.Drawing.Point(4, 25);
             this.tabPage6.Name = "tabPage6";
             this.tabPage6.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage6.Size = new System.Drawing.Size(559, 319);
+            this.tabPage6.Size = new System.Drawing.Size(462, 190);
             this.tabPage6.TabIndex = 5;
             this.tabPage6.Text = "tabPage6";
             this.tabPage6.UseVisualStyleBackColor = true;
             // 
-            // textBox1
-            // 
-            this.textBox1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.textBox1.Location = new System.Drawing.Point(3, 3);
-            this.textBox1.Multiline = true;
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(553, 313);
-            this.textBox1.TabIndex = 13;
-            // 
-            // sell_button
-            // 
-            this.sell_button.Location = new System.Drawing.Point(27, 121);
-            this.sell_button.Name = "sell_button";
-            this.sell_button.Size = new System.Drawing.Size(194, 35);
-            this.sell_button.TabIndex = 14;
-            this.sell_button.Text = "button3";
-            this.sell_button.UseVisualStyleBackColor = true;
-            // 
             // close_all_button
             // 
-            this.close_all_button.Location = new System.Drawing.Point(244, 505);
+            this.close_all_button.Location = new System.Drawing.Point(231, 456);
             this.close_all_button.Name = "close_all_button";
             this.close_all_button.Size = new System.Drawing.Size(194, 35);
             this.close_all_button.TabIndex = 15;
-            this.close_all_button.Text = "button4";
+            this.close_all_button.Text = "Close All";
             this.close_all_button.UseVisualStyleBackColor = true;
+            // 
+            // textBox1
+            // 
+            this.textBox1.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.textBox1.Location = new System.Drawing.Point(0, 522);
+            this.textBox1.Multiline = true;
+            this.textBox1.Name = "textBox1";
+            this.textBox1.Size = new System.Drawing.Size(470, 254);
+            this.textBox1.TabIndex = 16;
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(470, 645);
+            this.ClientSize = new System.Drawing.Size(470, 776);
+            this.Controls.Add(this.textBox1);
             this.Controls.Add(this.close_all_button);
             this.Controls.Add(this.close_selected_button);
             this.Controls.Add(this.tabControl1);
@@ -424,9 +422,8 @@
             this.tabControl1.ResumeLayout(false);
             this.tabPage1.ResumeLayout(false);
             this.tabPage1.PerformLayout();
-            this.tabPage6.ResumeLayout(false);
-            this.tabPage6.PerformLayout();
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
@@ -456,8 +453,8 @@
         private System.Windows.Forms.TabPage tabPage4;
         private System.Windows.Forms.TabPage tabPage5;
         private System.Windows.Forms.TabPage tabPage6;
-        private System.Windows.Forms.TextBox textBox1;
         private System.Windows.Forms.Button close_all_button;
+        private System.Windows.Forms.TextBox textBox1;
     }
 }
 

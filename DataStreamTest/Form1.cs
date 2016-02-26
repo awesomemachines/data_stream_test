@@ -3,8 +3,10 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.Globalization;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -19,6 +21,7 @@ namespace DataStreamTest
         public Form1()
         {
             InitializeComponent();
+            Thread.CurrentThread.CurrentCulture = new CultureInfo("en-US", false);
             dataGridView1.AutoGenerateColumns = false;
             dataGridView1.CurrentCellDirtyStateChanged += new EventHandler(dataGridView1_CurrentCellDirtyStateChanged);
             //dataGridView1.CellValueChanged += new DataGridViewCellEventHandler(dataGridView1_CellValueChanged);
@@ -27,12 +30,12 @@ namespace DataStreamTest
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            Timer add_trade = new Timer();
+            System.Windows.Forms.Timer add_trade = new System.Windows.Forms.Timer();
             add_trade.Interval = 5000;
             add_trade.Start();
 
-            Timer timer = new Timer();
-            timer.Interval = 100;
+            System.Windows.Forms.Timer timer = new System.Windows.Forms.Timer();
+            timer.Interval = 4000;
             timer.Start();
 
             timer.Tick += new EventHandler(ticks);
@@ -132,6 +135,33 @@ namespace DataStreamTest
                 }
             }
 
+            //try
+            //{
+            //    decimal upl1;
+            //    if (!decimal.TryParse(close_all_button.Text.Trim(), out upl1))
+            //    {
+
+            //    }
+
+            //    decimal upl2;
+            //    if (!decimal.TryParse(close_selected_button.Text.Trim(), out upl2))
+            //    {
+
+            //    }
+            //    double upl_selected = Double.Parse(close_selected_button.Text, CultureInfo.InvariantCulture);
+
+            //    close_all_button.BackColor = Color.Yellow;
+            //    if (upl1 > 0.00m) close_all_button.BackColor = Color.LimeGreen;
+            //    else if (upl1 < 0.00m) close_all_button.BackColor = Color.Red;
+
+            //    close_selected_button.BackColor = Color.Yellow;
+            //    if (upl2 > 0.00m) close_selected_button.BackColor = Color.LimeGreen;
+            //    else if (upl2 < 0.00m) close_selected_button.BackColor = Color.Red;
+            //}
+            //catch { }
+
+
+            update_upl_button();
             buy_button.Invoke((MethodInvoker)(() => buy_button.Text = ask.ToString()));
             textBox1.Text = text;
         }
@@ -144,30 +174,10 @@ namespace DataStreamTest
             {
                 int selector = rand.Next(200);              
 
-                double profit = rand.NextDouble();
+                double profit = rand.Next(200);
                 if(selector > 100) profit *= -1;
                 trade.upl = decimal.Round(Convert.ToDecimal(profit), 2, MidpointRounding.AwayFromZero);                             
             }
-        }
-
-        private void listBox1_SelectedIndexChanged(object sender, EventArgs e)
-        {
-           // numericUpDown1.Value = Convert.ToDecimal(listBox1.SelectedItem);
-        }
-
-        private void numericUpDown1_ValueChanged(object sender, EventArgs e)
-        {
-            
-        }
-
-        private void button1_Click(object sender, EventArgs e)
-        {
-            buy();
-        }
-
-        private void button2_Click(object sender, EventArgs e)
-        {
-            close_order();
         }
 
         void close_order()
@@ -187,6 +197,33 @@ namespace DataStreamTest
                 {
                     Trade trade = trades_db[i];
                     if(trade.ID == id)
+                    {
+                        trades_db.RemoveAt(i);
+                        break;
+                    }
+                }
+            }
+
+            dataGridView1.Refresh();
+        }
+
+        void close_order(int row)
+        {
+            //get trade id from the datasource
+            if (dataGridView1.SelectedCells.Count > 0)
+            {
+                int selectedrowindex = row;
+
+                DataGridViewRow selectedRow = dataGridView1.Rows[selectedrowindex];
+
+
+                int id = Convert.ToInt32(selectedRow.Cells["trade_id"].Value);
+
+
+                for (int i = 0; i < trades_db.Count; i++)
+                {
+                    Trade trade = trades_db[i];
+                    if (trade.ID == id)
                     {
                         trades_db.RemoveAt(i);
                         break;
@@ -234,8 +271,64 @@ namespace DataStreamTest
         }
 
         void dataGridView1_CurrentCellDirtyStateChanged(object sender, EventArgs e)
+        {            
+            if (dataGridView1.SelectedCells[0].ColumnIndex == 0)
+            {                
+                dataGridView1.CommitEdit(DataGridViewDataErrorContexts.Commit);
+                update_upl_button();
+            }         
+        }
+
+        void update_upl_button()
         {
-            if(dataGridView1.SelectedCells[0].ColumnIndex == 0) dataGridView1.CommitEdit(DataGridViewDataErrorContexts.Commit);
+            decimal upl_selected = 0;
+            decimal upl_all = 0;
+            foreach (DataGridViewRow row in dataGridView1.Rows)
+            {
+                //int selectedrowindex = dataGridView1.SelectedRows[0].Index;
+
+                int row_index = row.Index;
+
+                int id = Convert.ToInt32(row.Cells["trade_id"].Value);
+                bool selected = Convert.ToBoolean(row.Cells["selected"].Value);
+
+
+                for (int i = 0; i < trades_db.Count; i++)
+                {
+                    Trade trade = trades_db[i];
+                    if(trade.ID == id) upl_all += trade.upl;
+                    if (trade.ID == id && selected == true)
+                    {
+                        upl_selected += trade.upl;
+                    }
+                }
+            }
+
+            close_all_button.Text = upl_all.ToString("n2");
+            close_selected_button.Text = upl_selected.ToString("n2");
+        }
+
+        private void buy_button_Click(object sender, EventArgs e)
+        {
+            buy();
+        }
+
+        private void close_selected_button_Click(object sender, EventArgs e)
+        {
+            foreach (DataGridViewRow row in dataGridView1.Rows)
+            {
+                if ((bool)row.Cells["selected"].Value == true) close_order(row.Index);
+                
+            }
+
+
+
+            //foreach (DataGridViewRow rows in dataGridView1.SelectedRows)
+            //{
+            //    close_order();
+            //}
+
+
         }
     }
 }
